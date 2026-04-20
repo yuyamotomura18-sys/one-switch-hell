@@ -4,6 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,user-scalable=no" />
   <title>ONE SWITCH HELL</title>
+
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#111111" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="One Touch" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+
   <style>
     :root {
       --bg1: #090a0f;
@@ -687,7 +695,7 @@
       updateHud();
       state.cameraShake = 1;
       state.glitch = 1;
-      restartAt = performance.now() + 320;
+      restartAt = performance.now() + 420;
       sound.die();
       triggerDeathFlash();
       showCenter('DEAD', 'again.', true);
@@ -1099,6 +1107,14 @@
     document.addEventListener('gesturestart', (e) => {
       e.preventDefault();
     }, { passive: false });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch((err) => {
+          console.error('Service Worker registration failed:', err);
+        });
+      });
+    }
 
     resize();
     updateHud();
